@@ -26,4 +26,12 @@ public class ResultView : MonoBehaviour
             GameManager.Instance.Retry();
         }
     }
+
+    public void OnTitleButtonClicked()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ReturnToTitle();
+        }
+    }
 }

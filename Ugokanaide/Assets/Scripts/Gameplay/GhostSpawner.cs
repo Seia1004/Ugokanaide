@@ -6,7 +6,7 @@ public class GhostSpawner : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] private FlashlightController _flashlight;
     [SerializeField] private float _spawnInterval = 5f;
-    [SerializeField] private float _spawnRadius = 8f;
+    [SerializeField] private float _spawnMargin = 2f;
 
     private void Start()
     {
@@ -15,13 +15,46 @@ public class GhostSpawner : MonoBehaviour
 
     private void SpawnGhost()
     {
-        if (_ghostPrefab == null || _target == null)
+        Camera cam = Camera.main;
+
+        if (_ghostPrefab == null || _target == null || cam == null)
         {
             return;
         }
 
-        Vector2 direction = Random.insideUnitCircle.normalized;
-        Vector3 spawnPosition = _target.position + (Vector3)(direction * _spawnRadius);
+        float halfHeight = cam.orthographicSize;
+        float halfWidth = halfHeight * cam.aspect;
+        Vector3 cameraPosition = cam.transform.position;
+        float outerHalfWidth = halfWidth + _spawnMargin;
+        float outerHalfHeight = halfHeight + _spawnMargin;
+        int side = Random.Range(0, 4);
+        float offsetX;
+        float offsetY;
+
+        switch (side)
+        {
+            case 0:
+                offsetX = Random.Range(-outerHalfWidth, outerHalfWidth);
+                offsetY = outerHalfHeight;
+                break;
+            case 1:
+                offsetX = Random.Range(-outerHalfWidth, outerHalfWidth);
+                offsetY = -outerHalfHeight;
+                break;
+            case 2:
+                offsetX = -outerHalfWidth;
+                offsetY = Random.Range(-outerHalfHeight, outerHalfHeight);
+                break;
+            default:
+                offsetX = outerHalfWidth;
+                offsetY = Random.Range(-outerHalfHeight, outerHalfHeight);
+                break;
+        }
+
+        Vector3 spawnPosition = new Vector3(
+            cameraPosition.x + offsetX,
+            cameraPosition.y + offsetY,
+            0f);
         GameObject ghost = Instantiate(_ghostPrefab, spawnPosition, Quaternion.identity);
         GhostAI ghostAI = ghost.GetComponent<GhostAI>();
 

@@ -38,6 +38,11 @@ public class FlashlightController : MonoBehaviour
             return;
         }
 
+        if (Time.timeScale == 0f)
+        {
+            return;
+        }
+
         if (_light2D != null)
         {
             float scrollDelta = Mouse.current.scroll.ReadValue().y;

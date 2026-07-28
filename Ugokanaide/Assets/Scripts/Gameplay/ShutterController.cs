@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class ShutterController : MonoBehaviour
@@ -17,6 +18,16 @@ public class ShutterController : MonoBehaviour
         }
 
         if (!value.isPressed)
+        {
+            return;
+        }
+
+        if (Time.timeScale == 0f)
+        {
+            return;
+        }
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
