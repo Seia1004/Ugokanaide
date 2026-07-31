@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     private bool _hasCurrentDirection;
     private string _lastPlayedStateName;
 
+    public float AimAngleDegrees => _currentDirectionIndex * DirectionStepDegrees;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();

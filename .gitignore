@@ -52,6 +52,8 @@ crashlytics-build.properties
 # ---------------------------------------------
 sanctum_pixel/
 sanctum_pixel.meta
+/Ugokanaide/Assets/ElvGames/
+/Ugokanaide/Assets/ElvGames.meta
 
 # ---------------------------------------------
 # 外部配布元のフォント(ライセンス上は再配布可だが念のため含めない)

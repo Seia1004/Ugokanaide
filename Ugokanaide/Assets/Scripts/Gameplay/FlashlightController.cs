@@ -7,6 +7,7 @@ public class FlashlightController : MonoBehaviour
 {
     [SerializeField] private Light2D _light2D;
     [SerializeField] private float _angleOffsetDegrees = 0f;
+    [SerializeField] private float _orbitRadius = 0.15f;
     [SerializeField] private float _flashIntensity = 5f;
     [SerializeField] private float _flashFadeSeconds = 0.15f;
     [SerializeField] private float _minAngle = 20f;
@@ -17,9 +18,14 @@ public class FlashlightController : MonoBehaviour
 
     private float _baseIntensity;
     private float _zoomLevel = 0.5f;
+    private Vector3 _baseLocalPosition;
+    private Player _player;
 
     private void Awake()
     {
+        _player = GetComponentInParent<Player>();
+        _baseLocalPosition = transform.localPosition;
+
         if (_light2D == null)
         {
             _light2D = GetComponent<Light2D>();
@@ -53,25 +59,21 @@ public class FlashlightController : MonoBehaviour
             _light2D.pointLightInnerAngle = _light2D.pointLightOuterAngle * 0.4f;
         }
 
-        if (Camera.main == null)
+        if (_player == null)
         {
             return;
         }
 
-        Camera mainCamera = Camera.main;
-        Vector3 mouseScreenPosition = Mouse.current.position.ReadValue();
-        mouseScreenPosition.z = -mainCamera.transform.position.z;
+        float quantizedAngle = _player.AimAngleDegrees;
+        float quantizedAngleRadians = quantizedAngle * Mathf.Deg2Rad;
+        Vector2 orbitDirection = new Vector2(
+            Mathf.Cos(quantizedAngleRadians),
+            Mathf.Sin(quantizedAngleRadians));
 
-        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
-        Vector2 direction = mouseWorldPosition - transform.position;
-
-        if (direction.sqrMagnitude == 0f)
-        {
-            return;
-        }
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle + _angleOffsetDegrees);
+        transform.rotation = Quaternion.Euler(
+            0f, 0f, quantizedAngle + _angleOffsetDegrees);
+        transform.localPosition =
+            _baseLocalPosition + (Vector3)(orbitDirection * _orbitRadius);
     }
 
     public bool IsPositionLit(Vector2 worldPosition)
