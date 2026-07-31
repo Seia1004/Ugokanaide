@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3727972543512265390}
   - component: {fileID: 2725975045383470316}
   - component: {fileID: -9038391943084833148}
+  - component: {fileID: 1208658868141141934}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Ghost
@@ -136,7 +137,7 @@ MonoBehaviour:
   _target: {fileID: 0}
   _flashlight: {fileID: 0}
   _moveSpeed: 3
-  _stoppedColor: {r: 1, g: 0, b: 0, a: 1}
+  _deathAnimationSeconds: 0.5
 --- !u!58 &-9038391943084833148
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -173,3 +174,25 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!95 &1208658868141141934
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2661419670196748835}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2123737f6ef519d4baf9ece659b87756, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

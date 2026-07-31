@@ -1,19 +1,23 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 public class GhostAI : MonoBehaviour
 {
     [SerializeField] private Transform _target;
     [SerializeField] private FlashlightController _flashlight;
     [SerializeField] private float _moveSpeed = 3f;
-    [SerializeField] private Color _stoppedColor = Color.red;
+    [SerializeField] private bool _defaultFacesRight = true;
+    [SerializeField] private float _deathAnimationSeconds = 0.5f;
 
     public bool IsLit { get; private set; }
 
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
-    private Color _normalColor;
+    private Animator _animator;
+    private bool _isDead;
 
     public void Initialize(Transform target, FlashlightController flashlight)
     {
@@ -25,21 +29,34 @@ public class GhostAI : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _normalColor = _spriteRenderer.color;
+        _animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
+        if (_isDead)
+        {
+            return;
+        }
+
         IsLit = _flashlight != null && _flashlight.IsPositionLit(_rigidbody.position);
+        _animator.SetBool("IsLit", IsLit);
+
+        if (_target != null && !IsLit)
+        {
+            float relativeX = _target.position.x - _rigidbody.position.x;
+
+            if (!Mathf.Approximately(relativeX, 0f))
+            {
+                _spriteRenderer.flipX = _defaultFacesRight ? relativeX < 0f : relativeX > 0f;
+            }
+        }
 
         if (IsLit)
         {
             _rigidbody.linearVelocity = Vector2.zero;
-            _spriteRenderer.color = _stoppedColor;
             return;
         }
-
-        _spriteRenderer.color = _normalColor;
 
         if (_target == null)
         {
@@ -49,5 +66,25 @@ public class GhostAI : MonoBehaviour
 
         Vector2 direction = ((Vector2)_target.position - _rigidbody.position).normalized;
         _rigidbody.linearVelocity = direction * _moveSpeed;
+    }
+
+    public void Die()
+    {
+        if (_isDead)
+        {
+            return;
+        }
+
+        _isDead = true;
+        IsLit = false;
+        _rigidbody.linearVelocity = Vector2.zero;
+        _animator.SetTrigger("Died");
+        StartCoroutine(DieRoutine());
+    }
+
+    private IEnumerator DieRoutine()
+    {
+        yield return new WaitForSeconds(_deathAnimationSeconds);
+        Destroy(gameObject);
     }
 }

@@ -39,7 +39,7 @@ public class ShutterController : MonoBehaviour
         {
             if (ghost.IsLit)
             {
-                Destroy(ghost.gameObject);
+                ghost.Die();
                 destroyedCount++;
             }
         }
