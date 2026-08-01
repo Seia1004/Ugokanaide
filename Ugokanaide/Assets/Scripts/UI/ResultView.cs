@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ResultView : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _survivalTimeText;
-    [SerializeField] private TMP_Text _photographedCountText;
     [SerializeField] private TMP_Text _scoreText;
 
     private void OnEnable()
@@ -14,9 +12,7 @@ public class ResultView : MonoBehaviour
             return;
         }
 
-        _survivalTimeText.text = $"生存時間: {GameManager.Instance.SurvivalTime:F1}秒";
-        _photographedCountText.text = $"撮影数: {GameManager.Instance.PhotographedCount}体";
-        _scoreText.text = $"スコア: {GameManager.Instance.Score}";
+        _scoreText.text = GameManager.Instance.Score.ToString();
     }
 
     public void OnRetryButtonClicked()

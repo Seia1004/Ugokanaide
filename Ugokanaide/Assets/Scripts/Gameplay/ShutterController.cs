@@ -9,6 +9,15 @@ public class ShutterController : MonoBehaviour
     [SerializeField] private float _chargeSeconds = 3f;
 
     private bool _isCharging;
+    private bool _isPointerOverUI;
+    private float _chargeElapsed;
+
+    public float ChargeProgress => _isCharging ? Mathf.Clamp01(_chargeElapsed / _chargeSeconds) : 1f;
+
+    private void Update()
+    {
+        _isPointerOverUI = EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+    }
 
     public void OnAttack(InputValue value)
     {
@@ -27,7 +36,7 @@ public class ShutterController : MonoBehaviour
             return;
         }
 
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        if (_isPointerOverUI)
         {
             return;
         }
@@ -40,7 +49,7 @@ public class ShutterController : MonoBehaviour
             if (ghost.IsLit)
             {
                 ghost.Die();
-                destroyedCount++;
+                destroyedCount += ghost.PhotographValue;
             }
         }
 
@@ -55,13 +64,18 @@ public class ShutterController : MonoBehaviour
     private IEnumerator ChargeRoutine()
     {
         _isCharging = true;
+        _chargeElapsed = 0f;
 
         if (_flashlight != null)
         {
             _flashlight.PlayShutterEffect();
         }
 
-        yield return new WaitForSeconds(_chargeSeconds);
+        while (_chargeElapsed < _chargeSeconds)
+        {
+            _chargeElapsed += Time.deltaTime;
+            yield return null;
+        }
 
         if (_flashlight != null)
         {
