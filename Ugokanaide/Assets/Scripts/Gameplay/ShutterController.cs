@@ -7,6 +7,9 @@ public class ShutterController : MonoBehaviour
 {
     [SerializeField] private FlashlightController _flashlight;
     [SerializeField] private float _chargeSeconds = 3f;
+    [SerializeField] private AudioClip _seShutterFire;
+    [SerializeField] private AudioClip _seGhostGet;
+    [SerializeField] private AudioClip _seChargeReady;
 
     private bool _isCharging;
     private bool _isPointerOverUI;
@@ -53,6 +56,11 @@ public class ShutterController : MonoBehaviour
             }
         }
 
+        if (destroyedCount > 0 && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySE(_seGhostGet);
+        }
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.RegisterPhotographed(destroyedCount);
@@ -71,10 +79,20 @@ public class ShutterController : MonoBehaviour
             _flashlight.PlayShutterEffect();
         }
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySE(_seShutterFire);
+        }
+
         while (_chargeElapsed < _chargeSeconds)
         {
             _chargeElapsed += Time.deltaTime;
             yield return null;
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySE(_seChargeReady);
         }
 
         if (_flashlight != null)

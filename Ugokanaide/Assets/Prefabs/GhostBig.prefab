@@ -134,15 +134,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e64ad50ad9bbf374890c0e020f41bbb2, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostAI
   _target: {fileID: 0}
   _flashlight: {fileID: 0}
-  _moveSpeed: 3.6
+  _moveSpeed: 3.5
   _speedVarianceFraction: 0.5
   _photographValue: 2
   _defaultFacesRight: 1
   _deathAnimationSeconds: 0.5
+  _spotlight: {fileID: 7679307741326417494}
 --- !u!95 &1208658868141141934
 Animator:
   serializedVersion: 7
@@ -160,7 +161,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage:
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -258,7 +259,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.Light2D
   m_ComponentVersion: 2
   m_LightType: 3
@@ -289,7 +290,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1.5
+  m_PointLightOuterRadius: 4
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

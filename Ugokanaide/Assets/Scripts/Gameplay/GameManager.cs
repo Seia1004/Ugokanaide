@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject _resultView;
+    [SerializeField] private AudioClip _seGhostCaught;
+    [SerializeField] private AudioClip _seFireballCaught;
 
     public static GameManager Instance { get; private set; }
     public bool IsGameOver { get; private set; }
@@ -39,7 +41,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"生存時間: {SurvivalTime:F1}秒 / 撮影数: {PhotographedCount}体 / スコア: {Score}");
     }
 
-    public void EndGame()
+    public void EndGame(bool killedByFireball = false)
     {
         if (IsGameOver)
         {
@@ -48,6 +50,12 @@ public class GameManager : MonoBehaviour
 
         IsGameOver = true;
         Time.timeScale = 0f;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySE(killedByFireball ? _seFireballCaught : _seGhostCaught);
+            AudioManager.Instance.PlayResultJingle();
+        }
 
         if (_resultView != null)
         {

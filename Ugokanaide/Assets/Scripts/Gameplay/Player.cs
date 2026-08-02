@@ -197,9 +197,18 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Ghost") && GameManager.Instance != null)
+        if (GameManager.Instance == null)
         {
-            GameManager.Instance.EndGame();
+            return;
+        }
+
+        if (other.CompareTag("Ghost"))
+        {
+            GameManager.Instance.EndGame(false);
+        }
+        else if (other.CompareTag("Fireball"))
+        {
+            GameManager.Instance.EndGame(true);
         }
     }
 }

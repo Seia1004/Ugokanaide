@@ -9,6 +9,8 @@ public class SettingsView : MonoBehaviour
     [SerializeField] private Slider _bgmVolumeSlider;
     [SerializeField] private Slider _seVolumeSlider;
     [SerializeField] private GameObject _panel;
+    [SerializeField] private AudioClip _seOpen;
+    [SerializeField] private AudioClip _seClose;
 
     private float _previousTimeScale = 1f;
 
@@ -37,6 +39,11 @@ public class SettingsView : MonoBehaviour
 
     public void Open()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySE(_seOpen);
+        }
+
         SyncSlidersFromMixer();
         _previousTimeScale = Time.timeScale;
         Time.timeScale = 0f;
@@ -45,6 +52,11 @@ public class SettingsView : MonoBehaviour
 
     public void Close()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySE(_seClose);
+        }
+
         _panel.SetActive(false);
         Time.timeScale = _previousTimeScale;
     }

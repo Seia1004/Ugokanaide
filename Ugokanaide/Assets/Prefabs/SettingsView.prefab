@@ -825,6 +825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7878846523771254738}
   - component: {fileID: 2459614446650473824}
+  - component: {fileID: 8541423170294069822}
   m_Layer: 0
   m_Name: SettingsView
   m_TagString: Untagged
@@ -864,6 +865,20 @@ MonoBehaviour:
   _bgmVolumeSlider: {fileID: 374442749932115354}
   _seVolumeSlider: {fileID: 4044528259160187672}
   _panel: {fileID: 7699253204075083068}
+  _seOpen: {fileID: 0}
+  _seClose: {fileID: 0}
+--- !u!225 &8541423170294069822
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8851596756532231129}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &398341289906535493
 PrefabInstance:
   m_ObjectHideFlags: 0

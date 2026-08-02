@@ -93,5 +93,12 @@ public class GhostSpawner : MonoBehaviour
         {
             ghostAI.Initialize(_target, _flashlight);
         }
+
+        GhostFireballLauncher fireballLauncher = ghost.GetComponent<GhostFireballLauncher>();
+
+        if (fireballLauncher != null)
+        {
+            fireballLauncher.Initialize(_target, _flashlight);
+        }
     }
 }
