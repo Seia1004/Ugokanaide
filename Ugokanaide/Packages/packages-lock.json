@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.annulusgames.unityroom-api": {
+      "version": "https://github.com/AnnulusGames/unityroom-api.git?path=Assets/Unityroom",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "1842d48946363eba6222e84ac6cf07057fdda073"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.4",
       "depth": 0,

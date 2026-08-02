@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unityroom;
 
 public class GameManager : MonoBehaviour
 {
@@ -50,6 +51,11 @@ public class GameManager : MonoBehaviour
 
         IsGameOver = true;
         Time.timeScale = 0f;
+
+        UnityroomAPI.ReportScore(1, Score, isSuccess =>
+        {
+            Debug.Log(isSuccess ? "スコア送信成功" : "スコア送信失敗");
+        });
 
         if (AudioManager.Instance != null)
         {
